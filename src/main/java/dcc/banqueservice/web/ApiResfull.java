@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,6 +62,7 @@ public class ApiResfull {
             }
     )
 
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PostMapping
     public ResponseEntity<ResponseCompteDTo> add(@RequestBody RequestCompteDto requestCompteDto){
         ResponseCompteDTo responseCompteDTo = compteService.Add_Compte(requestCompteDto);
@@ -81,7 +83,7 @@ public class ApiResfull {
                     @ApiResponse(responseCode = "5xx",description = "erreur serveur"),
             }
     )
-
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<ResponseCompteDTo>> getall(){
         List<ResponseCompteDTo> compteDTos = compteService.GetAllCompte();
@@ -103,7 +105,7 @@ public class ApiResfull {
                     @ApiResponse(responseCode = "5xx",description = "erreur serveur"),
             }
     )
-
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<ResponseCompteDTo> get(@PathVariable Integer id){
         ResponseCompteDTo responseCompteDTo = compteService.GetCompteByID(id);
@@ -133,7 +135,7 @@ public class ApiResfull {
                     @ApiResponse(responseCode = "5xx",description = "erreur serveur"),
             }
     )
-
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ResponseCompteDTo> update(@PathVariable Integer id,@RequestBody RequestCompteDto requestCompteDto){
         ResponseCompteDTo responseCompteDTo = compteService.Update_Compte(id, requestCompteDto);
@@ -150,6 +152,7 @@ public class ApiResfull {
                     @ApiResponse(responseCode = "5xx",description = "erreur serveur"),
             }
     )
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Integer id){
         compteService.DeleteCompteByID(id);
@@ -173,6 +176,7 @@ public class ApiResfull {
                     @ApiResponse(responseCode = "5xx",description = "erreur serveur"),
             }
     )
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PatchMapping("/crediter/{id}/{m}")
     ResponseEntity<ResponseCompteDTo> crediter(@PathVariable Integer id, @PathVariable Double m){
         ResponseCompteDTo responseCompteDTo = compteService.Crediter(id, m);
@@ -196,6 +200,7 @@ public class ApiResfull {
                     @ApiResponse(responseCode = "5xx",description = "erreur serveur"),
             }
     )
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @PatchMapping("/debiter/{id}/{m}")
     ResponseEntity<ResponseCompteDTo> debiter(@PathVariable Integer id, @PathVariable Double m){
         ResponseCompteDTo responseCompteDTo = compteService.Debiter(id, m);
